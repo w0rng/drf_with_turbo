@@ -1,0 +1,9 @@
+{% load rest_framework %}
+
+<turbo-frame id="new_task">
+    <form method="POST" action="{% url 'tasks:task-list' %}?{{ request.GET.urlencode }}" data-turbo-frame="tasks">
+        {% csrf_token %}
+        {% render_form serializer %}
+        <input type="submit" value="Добавить">
+    </form>
+</turbo-frame>

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load rest_framework %}
+
+{% block content %}
+    <h1>Задачи</h1>
+    {{ request.query }}
+    <turbo-frame id="tasks">
+        {% for task in objects %}
+            <turbo-frame id="task={{ task.pk }}">
+                <a data-turbo-method="post" data-turbo-frame="tasks" href="{% url 'tasks:task-done' pk=task.pk %}">
+                    {% if task.done %} ✓⃝{% else %} ⃝{% endif %}
+                </a>
+                <a href="{% url 'tasks:task-detail' pk=task.pk %}"> {{ task.text }}</a> <br>
+            </turbo-frame>
+        {% endfor %}
+
+        {% include 'new.html' %}
+
+        {{ paginator.to_html }}
+    </turbo-frame>
+{% endblock %}

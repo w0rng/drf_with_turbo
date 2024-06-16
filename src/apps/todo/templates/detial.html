@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load rest_framework %}
+
+{% block content %}
+    <h1>Задача: {{ object.pk }}</h1>
+    <turbo-frame id="task={{ object.pk }}">
+        <form action="{% url 'tasks:task-detail' pk=object.pk %}" target="_top">
+            {% csrf_token %}
+            {% render_form serializer %}
+            <input type="submit" class="btn btn-outline-success" value="Сохранить" formmethod="patch">
+            <a type="button" class="btn btn-outline-secondary" href="{% url 'tasks:task-list' %}">Назад</a>
+            <a type="button" class="btn btn-outline-danger" data-turbo-method="delete"
+               href="{% url 'tasks:task-detail' pk=object.pk %}" data-turbo-frame="tasks">🗑️</a>
+        </form>
+
+    </turbo-frame>
+{% endblock %}
